@@ -16,23 +16,23 @@ if [[ ! -f ${TMUX_PATH} || -z ${TMUX_PATH} ]]; then
 fi
 
 TEMP_INSTALL_PATH=${HOME}
-CFG_PATH=${TEMP_INSTALL_PATH}/mac-config
+CFG_PATH=${TEMP_INSTALL_PATH}/my-config
 VIM_PATH=${CFG_PATH}/vim
 
-echo -e "$INFO_CLR-------------------- Downloading Mac-config --------------------$RESET_CLR"
+echo -e "$INFO_CLR-------------------- Downloading my-config --------------------$RESET_CLR"
 
 cd "${TEMP_INSTALL_PATH}"
 rm -rf "${CFG_PATH}"
 
-git clone git@github.com:ddrccw/mac-config.git
+git clone git@github.com:ddrccw/my-config.git
 
-echo -e "$RESULT_CLR-------------------- Download Mac-config --------------------$RESET_CLR"
+echo -e "$RESULT_CLR-------------------- Download my-config --------------------$RESET_CLR"
 
 echo -e "$INFO_CLR-------------------- Downloading Submodule --------------------$RESET_CLR"
 
 cd "${CFG_PATH}"
 git submodule init
-git submodule update 
+git submodule update
 
 
 cd "${VIM_PATH}"

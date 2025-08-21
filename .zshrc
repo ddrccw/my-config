@@ -53,14 +53,16 @@ plugins=(git zsh-autosuggestions)
 
 # User configuration
 
-export PATH="/usr/local/Cellar/gnu-getopt/1.1.6/bin/"
+if [ -d "/usr/local/Cellar/gnu-getopt/1.1.6/bin" ]; then
+  export PATH="/usr/local/Cellar/gnu-getopt/1.1.6/bin:$PATH"
+fi
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 export COCOAPODS_DISABLE_STATS=true
 export COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=YES
 
-source $ZSH/oh-my-zsh.sh
+[ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
 #export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
 
@@ -90,7 +92,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # 判断是否是arm64
-if [[ `uname -m` == 'arm64' ]]; then
+if [[ `uname -m` == 'arm64' ]] && [ -x "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -110,3 +112,55 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [ -d "$HOME/.jenv/bin" ]; then
+  export PATH="$HOME/.jenv/bin:$PATH"
+fi
+type -p jenv 1>/dev/null && eval "$(jenv init -)"
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f "$HOME/.dart-cli-completion/zsh-config.zsh" ]] && . "$HOME/.dart-cli-completion/zsh-config.zsh" || true
+## [/Completion]
+
+# rust
+if [ -d "$HOME/.cargo/bin" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+if command -v sgpt 1>/dev/null 2>&1; then
+  # Shell-GPT integration ZSH v0.2
+  _sgpt_zsh() {
+  if [[ -n "$BUFFER" ]]; then
+      _sgpt_prev_cmd=$BUFFER
+      BUFFER+="⌛"
+      zle -I && zle redisplay
+      BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd" --no-interaction)
+      zle end-of-line
+  fi
+  }
+  zle -N _sgpt_zsh
+  bindkey ^l _sgpt_zsh
+  # Shell-GPT integration ZSH v0.2
+fi
+
+# Added by Windsurf
+if [ -d "$HOME/.codeium/windsurf/bin" ]; then
+  export PATH="$HOME/.codeium/windsurf/bin:$PATH"
+fi
+
+# pnpm
+if [ -d "$HOME/Library/pnpm" ]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+fi
+# pnpm end
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
