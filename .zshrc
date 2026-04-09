@@ -53,15 +53,6 @@ plugins=(git zsh-autosuggestions)
 
 # User configuration
 
-if [ -d "/usr/local/Cellar/gnu-getopt/1.1.6/bin" ]; then
-  export PATH="/usr/local/Cellar/gnu-getopt/1.1.6/bin:$PATH"
-fi
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-
-# export MANPATH="/usr/local/man:$MANPATH"
-export COCOAPODS_DISABLE_STATS=true
-export COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=YES
-
 [ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
 #export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
@@ -96,37 +87,15 @@ if [[ `uname -m` == 'arm64' ]] && [ -x "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-#非zsh约定的文件，仅用来放不要被git同步的本地配置
-[ -f ~/.zsh_profile ] && source ~/.zsh_profile
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-type -p rbenv 1>/dev/null && eval "$(rbenv init -)"
 
-if command -v pyenv 1>/dev/null 2>&1; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-if [ -d "$HOME/.jenv/bin" ]; then
-  export PATH="$HOME/.jenv/bin:$PATH"
-fi
-type -p jenv 1>/dev/null && eval "$(jenv init -)"
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f "$HOME/.dart-cli-completion/zsh-config.zsh" ]] && . "$HOME/.dart-cli-completion/zsh-config.zsh" || true
 ## [/Completion]
 
-# rust
-if [ -d "$HOME/.cargo/bin" ]; then
-  export PATH="$HOME/.cargo/bin:$PATH"
-fi
 
 if command -v sgpt 1>/dev/null 2>&1; then
   # Shell-GPT integration ZSH v0.2
@@ -144,21 +113,6 @@ if command -v sgpt 1>/dev/null 2>&1; then
   # Shell-GPT integration ZSH v0.2
 fi
 
-# Added by Windsurf
-if [ -d "$HOME/.codeium/windsurf/bin" ]; then
-  export PATH="$HOME/.codeium/windsurf/bin:$PATH"
-fi
-
-# pnpm
-if [ -d "$HOME/Library/pnpm" ]; then
-  export PNPM_HOME="$HOME/Library/pnpm"
-  case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) export PATH="$PNPM_HOME:$PATH" ;;
-  esac
-fi
-# pnpm end
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -166,14 +120,13 @@ if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/
 if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
 
 
-# Added by CodeBuddy
-if [ -d "$HOME/.codebuddy/bin" ]; then export PATH="$HOME/.codebuddy/bin:$PATH"; fi
-
-# cursor-agent
-if [ -d "$HOME/.local/bin" ]; then export PATH="$HOME/.local/bin:$PATH"; fi
-
 # kiro
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# thefuck
+if command -v thefuck 1>/dev/null 2>&1; then
+  eval "$(thefuck --alias)"
+fi
 
 # Shell-GPT integration ZSH v0.2
 _sgpt_zsh() {
@@ -188,3 +141,8 @@ fi
 zle -N _sgpt_zsh
 bindkey ^l _sgpt_zsh
 # Shell-GPT integration ZSH v0.2
+
+. "$HOME/.local/bin/env"
+
+[ -s "${HOME}/acg-devTools/cli-setup.sh" ] && source "${HOME}/acg-devTools/cli-setup.sh"
+
