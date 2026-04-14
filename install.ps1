@@ -120,6 +120,21 @@ if (Test-Path $GitIgnoreSource) {
     Write-Host "✓ Global gitignore linked" -ForegroundColor $ResultColor
 }
 
+# Zsh configurations (for Git Bash / MSYS2 / WSL)
+$ZshConfigs = @(".zshrc", ".zshenv", ".zprofile")
+foreach ($zfile in $ZshConfigs) {
+    $ZshSource = Join-Path $CfgPath $zfile
+    if (Test-Path $ZshSource) {
+        $ZshTarget = Join-Path $env:USERPROFILE $zfile
+        if (Test-Path $ZshTarget) {
+            Remove-Item $ZshTarget -Force
+        }
+        New-Item -ItemType SymbolicLink -Path $ZshTarget -Target $ZshSource -Force
+        $WindowsRelevantConfigs += $zfile
+        Write-Host "✓ Zsh config linked ($zfile)" -ForegroundColor $ResultColor
+    }
+}
+
 Write-Host "-------------------- Configuration Files Complete --------------------" -ForegroundColor $ResultColor
 
 # Optional: Set up PowerShell profile if there's a relevant config
