@@ -68,5 +68,5 @@ if [ -d "$HOME/.codebuddy/bin" ]; then export PATH="$HOME/.codebuddy/bin:$PATH";
 if [ -d "$HOME/.local/bin" ]; then export PATH="$HOME/.local/bin:$PATH"; fi
 
 # Added by Antigravity
-export PATH="/Users/chencheng/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 

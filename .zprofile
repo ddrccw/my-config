@@ -12,3 +12,7 @@ fi
 if command -v jenv 1>/dev/null 2>&1; then
   eval "$(jenv init -)"
 fi
+
+
+# Added by Antigravity CLI installer
+export PATH="${HOME}/.local/bin:$PATH"

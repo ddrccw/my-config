@@ -139,5 +139,9 @@ bindkey ^l _sgpt_zsh
 
 . "$HOME/.local/bin/env"
 
-[ -s "${HOME}/acg-devTools/cli-setup.sh" ] && source "${HOME}/acg-devTools/cli-setup.sh"
+# Added by Antigravity IDE
+export PATH="${HOME}/.antigravity-ide/antigravity-ide/bin:$PATH"
 
+
+# Added by Antigravity CLI installer
+export PATH="${HOME}/.local/bin:$PATH"
