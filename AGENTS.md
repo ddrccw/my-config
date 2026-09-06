@@ -11,7 +11,7 @@ Before starting work, read the shared cross-machine conventions in
 repository.
 
 Codex on the NAS also follows the NAS-specific repository conventions in the
-shared `AGENTS.md` referenced by its global instructions. Maintain attribution,
+`nas/docs/codex-conventions.md` used by its global instructions. Maintain attribution,
 dates, and Git operation requirements in the shared conventions. This file
 contains only additional my-config requirements.
 
