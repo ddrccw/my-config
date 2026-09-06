@@ -18,8 +18,8 @@ if command -v jenv 1>/dev/null 2>&1; then
 fi
 
 
-# Added by Antigravity CLI installer
-export PATH="${HOME}/.local/bin:$PATH"
+# Keep user-local executables ahead of system tools.
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
 
 # Machine-only overrides.
 [[ -f "$HOME/.zprofile.local" ]] && source "$HOME/.zprofile.local"

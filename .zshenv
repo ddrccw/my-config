@@ -70,8 +70,8 @@ fi
 # Added by CodeBuddy
 if [ -d "$HOME/.codebuddy/bin" ]; then export PATH="$HOME/.codebuddy/bin:$PATH"; fi
 
-# cursor-agent
-if [ -d "$HOME/.local/bin" ]; then export PATH="$HOME/.local/bin:$PATH"; fi
+# User-local executables shared by command-line tools.
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
 
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"

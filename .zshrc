@@ -134,8 +134,8 @@ fi
 export PATH="${HOME}/.antigravity-ide/antigravity-ide/bin:$PATH"
 
 
-# Added by Antigravity CLI installer
-export PATH="${HOME}/.local/bin:$PATH"
+# Keep user-local executables ahead of system tools.
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
 
 # Machine-only overrides.
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
