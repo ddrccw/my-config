@@ -163,5 +163,5 @@ Repository working conventions are maintained in [AGENTS.md](AGENTS.md).
 Cross-machine Agent conventions are maintained in
 [Agent/AGENTS.md](Agent/AGENTS.md) and synchronized with this repository. See
 [Agent/README.md](Agent/README.md) for setup and synchronization instructions,
-or give [Agent/INSTALL.md](Agent/INSTALL.md) directly to an Agent for assisted
-installation.
+or give [Agent/INSTALL.md](Agent/INSTALL.md) directly to an Agent to install
+my-config and connect the shared conventions.

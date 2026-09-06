@@ -14,7 +14,7 @@ default checkout is `~/my-config`, and the shared convention file is
 ## File Responsibilities
 
 - [AGENTS.md](AGENTS.md): conventions shared across machines and projects.
-- [INSTALL.md](INSTALL.md): instructions that can be given directly to an Agent to connect the shared conventions.
+- [INSTALL.md](INSTALL.md): instructions that can be given directly to an Agent to install my-config and connect the shared conventions.
 - The repository-root `AGENTS.md`: maintenance requirements specific to my-config.
 - Each project's `AGENTS.md`: project procedures, deployment rules, and domain knowledge.
 - Machine-local files outside the repository: machine differences and sensitive values.
