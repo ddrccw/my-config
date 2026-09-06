@@ -1,3 +1,7 @@
+# Authorship: Human-AI collaboration
+# AI-Assisted-By: OpenAI Codex
+# Updated: 2026-09-06
+
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
@@ -137,7 +141,7 @@ zle -N _sgpt_zsh
 bindkey ^l _sgpt_zsh
 # Shell-GPT integration ZSH v0.2
 
-. "$HOME/.local/bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # Added by Antigravity IDE
 export PATH="${HOME}/.antigravity-ide/antigravity-ide/bin:$PATH"
@@ -145,3 +149,7 @@ export PATH="${HOME}/.antigravity-ide/antigravity-ide/bin:$PATH"
 
 # Added by Antigravity CLI installer
 export PATH="${HOME}/.local/bin:$PATH"
+
+# Machine-only overrides.
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+true

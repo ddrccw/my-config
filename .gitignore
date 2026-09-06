@@ -1,5 +1,19 @@
+# Authorship: Human-AI collaboration
+# AI-Assisted-By: OpenAI Codex
+# Updated: 2026-09-06
+
 *.swp
 *.swo
 .tmux/plugins/*
 .tmux/resurrect/*
 
+# Machine-only configuration and secrets
+.env
+.env.*
+!.env.example
+.gitconfig.local
+.zshenv.local
+.zprofile.local
+.zshrc.local
+# Deprecated local configuration; keep ignored during migration.
+.zsh_profile

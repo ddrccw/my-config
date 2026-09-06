@@ -1,3 +1,12 @@
+# Authorship: Human-AI collaboration
+# AI-Assisted-By: OpenAI Codex
+# Updated: 2026-09-06
+
+# Optional tool directories shared by all hosts (including Entware).
+typeset -U path
+[[ -d /opt/sbin ]] && path=(/opt/sbin $path)
+[[ -d /opt/bin ]] && path=(/opt/bin $path)
+
 
 
 # Brew
@@ -14,15 +23,12 @@ export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export COCOAPODS_DISABLE_STATS=true
 export COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=YES
 
-#非zsh约定的文件，仅用来放不要被git同步的本地配置
-[ -f ~/.zsh_profile ] && source ~/.zsh_profile
-
 # rust
 if [ -d "$HOME/.cargo/bin" ]; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-type -p rbenv 1>/dev/null && eval "$(rbenv init -)"
+command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init -)"
 
 if command -v pyenv 1>/dev/null 2>&1; then
   export PYENV_ROOT="$HOME/.pyenv"
@@ -37,7 +43,7 @@ export NVM_DIR="$HOME/.nvm"
 if [ -d "$HOME/.jenv/bin" ]; then
   export PATH="$HOME/.jenv/bin:$PATH"
 fi
-type -p jenv 1>/dev/null && eval "$(jenv init -)"
+command -v jenv >/dev/null 2>&1 && eval "$(jenv init -)"
 
 # Added by Windsurf
 if [ -d "$HOME/.codeium/windsurf/bin" ]; then
@@ -70,3 +76,11 @@ if [ -d "$HOME/.local/bin" ]; then export PATH="$HOME/.local/bin:$PATH"; fi
 # Added by Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
+
+# Machine-only overrides; .zsh_profile is deprecated.
+if [[ -f "$HOME/.zshenv.local" ]]; then
+  source "$HOME/.zshenv.local"
+elif [[ -f "$HOME/.zsh_profile" ]]; then
+  source "$HOME/.zsh_profile"
+fi
+true

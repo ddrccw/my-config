@@ -1,3 +1,7 @@
+# Authorship: Human-AI collaboration
+# AI-Assisted-By: OpenAI Codex
+# Updated: 2026-09-06
+
 # Fix for macOS path_helper (which runs after ~/.zshenv and resets PATH for login shells)
 # This ensures that our version managers stay at the front of the PATH.
 
@@ -16,3 +20,7 @@ fi
 
 # Added by Antigravity CLI installer
 export PATH="${HOME}/.local/bin:$PATH"
+
+# Machine-only overrides.
+[[ -f "$HOME/.zprofile.local" ]] && source "$HOME/.zprofile.local"
+true
