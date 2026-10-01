@@ -1,7 +1,7 @@
 <!--
 Authorship: Human-AI collaboration
 AI-Assisted-By: OpenAI Codex
-Updated: 2026-09-06
+Updated: 2026-10-01
 -->
 
 # Shared Cross-Machine Agent Conventions
@@ -20,6 +20,7 @@ conventions here instead of maintaining separate copies on each machine.
 - Keep shared conventions in this file, project procedures in project documentation, and machine paths, addresses, runtime state, and local configuration in environment-specific documentation or files outside the repository.
 - Prefer `~`, relative paths, or environment variables for cross-machine paths. Verify actual paths and available capabilities before use.
 - Do not store session transcripts, caches, authentication data, or an Agent application's entire configuration directory here.
+- After a task completes and its result is verified, promptly remove temporary task directories and files created for it, such as download logs, PID files, exit-status files, and commit-message files. Preserve deliverables, deployment scripts, persistent service data and logs, and files the user asks to retain.
 
 ## Document Header Metadata
 
