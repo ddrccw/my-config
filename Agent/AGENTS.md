@@ -1,7 +1,7 @@
 <!--
 Authorship: Human-AI collaboration
 AI-Assisted-By: OpenAI Codex
-Updated: 2026-10-01
+Updated: 2026-10-02
 -->
 
 # Shared Cross-Machine Agent Conventions
@@ -41,6 +41,17 @@ Updated: 2026-09-06
 - Set `Updated` to the actual modification date in `YYYY-MM-DD` format. Do not copy the example date unchanged. Read-only inspection does not require a date update.
 - Update existing metadata instead of inserting a duplicate. Preserve existing copyright, license, and author notices; place this metadata immediately after them when necessary.
 - For scripts and configuration formats that support comments, use the format's native comment syntax. Keep a script's shebang on the first line. For formats that do not support comments, record the metadata in accompanying documentation.
+
+## Git Worktree Isolation
+
+- By default, make repository changes (code, scripts, configuration, and documentation) in a task-specific Git worktree on a dedicated branch. Independent concurrent tasks must use different worktrees and branches. Reuse an existing isolated worktree assigned to the same task instead of creating another. Read-only inspection may use the primary checkout.
+- Before creating a worktree, inspect the branch, working-tree and staged changes, and `git worktree list`. Choose an explicit base commit and a unique task branch and directory. A clean checkout does not prove that another session is not using it; switching branches in a shared directory does not provide isolation.
+- Place task worktrees outside existing repository checkouts and follow the environment's storage and directory-permission rules. Verify that worktree paths and Git metadata resolve in the environment that runs the task, especially across host/container path mappings. Keep machine-specific paths in environment documentation.
+- A new worktree does not automatically include another checkout's uncommitted or untracked files. Preserve those files and its staging area. Do not switch, stash, reset, or clean another session's checkout to prepare a task. If the task depends on uncommitted work, arrange a scoped handoff or wait for integration before using it.
+- Perform edits, builds, tests, staging, and authorized commits in the assigned worktree. Check command working directories, absolute paths, and symlink targets so that writes do not accidentally reach the shared checkout. Preserve installed shared entry points instead of redirecting them to a temporary task worktree.
+- Use the primary checkout for stable shared entry points and serialized integration. Before applying a reviewed task patch or merging authorized commits, recheck the destination branch, HEAD, working-tree diff, and staged diff. Preserve unrelated and intervening changes, resolve overlapping changes deliberately, and verify the integrated result. Worktree creation does not grant authorization to commit or push; the Git commit conventions below still apply.
+- Worktrees isolate checkout files and staging areas, not shared runtime resources. Coordinate writes to the same container, deployment directory, database, port, or other shared service, and serialize conflicting operations even when their code changes use separate worktrees.
+- After verification and integration, remove only the current task's unused worktree and branch when no session still uses them and no changes would be lost. Retain worktrees containing uncommitted or unmerged work until it has been safely delivered or integrated; report the retained path, branch, and remaining work. Never force-remove another task's worktree or perform blanket cleanup.
 
 ## Git Commit Conventions
 
