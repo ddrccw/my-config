@@ -1,7 +1,7 @@
 <!--
 Authorship: Human-AI collaboration
 AI-Assisted-By: OpenAI Codex
-Updated: 2026-09-06
+Updated: 2026-10-12
 -->
 
 # Agent Convention Management
@@ -45,7 +45,10 @@ existing local instructions and add the reference without replacing them.
 
 Before editing, inspect the working tree and synchronize remote updates. Resolve
 local changes safely first. Edit shared rules in `Agent/AGENTS.md`, review the
-diff and check for sensitive data, then commit or push only when authorized.
+diff and check for sensitive data, then commit the completed and verified task
+locally under the shared Git commit conventions. Push or otherwise publish to a
+remote only with explicit user authorization. When using a task worktree,
+commit there, integrate and verify the result, and only then remove the worktree.
 After pulling on another machine, start a new session or reload instructions as
 supported by the Agent application.
 

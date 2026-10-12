@@ -1,7 +1,7 @@
 <!--
 Authorship: Human-AI collaboration
 AI-Assisted-By: OpenAI Codex
-Updated: 2026-10-02
+Updated: 2026-10-12
 -->
 
 # Shared Cross-Machine Agent Conventions
@@ -50,13 +50,14 @@ Updated: 2026-09-06
 - Place task worktrees outside existing repository checkouts and follow the environment's storage and directory-permission rules. Verify that worktree paths and Git metadata resolve in the environment that runs the task, especially across host/container path mappings. Keep machine-specific paths in environment documentation.
 - A new worktree does not automatically include another checkout's uncommitted or untracked files. Preserve those files and its staging area. Do not switch, stash, reset, or clean another session's checkout to prepare a task. If the task depends on uncommitted work, arrange a scoped handoff or wait for integration before using it.
 - Perform edits, builds, tests, staging, and authorized commits in the chosen task checkout; when using an isolated worktree, keep those operations there. Check command working directories, absolute paths, and symlink targets so that writes reach the intended checkout. Preserve installed shared entry points instead of redirecting them to a temporary task worktree. Serialize staging and commits in a shared checkout, and recheck the branch and diffs to avoid including another task's changes.
-- Serialize integration into a destination checkout. Before applying a reviewed task patch or merging authorized commits, recheck the destination branch, HEAD, working-tree diff, and staged diff. Preserve unrelated and intervening changes, resolve overlapping changes deliberately, and verify the integrated result. Worktree creation does not grant authorization to commit or push; the Git commit conventions below still apply.
+- When using a task worktree, complete the required checks and make the task's local commits there before integration, following the Git commit conventions below. Do not move completed changes back to another checkout as an uncommitted patch merely to delete the worktree. If the user explicitly requests uncommitted changes, retain the task worktree and report its path.
+- Serialize integration into a destination checkout. Before integrating task commits, or an uncommitted patch explicitly requested by the user, recheck the destination branch, HEAD, working-tree diff, and staged diff. Preserve unrelated and intervening changes, resolve overlapping changes deliberately, and verify the integrated result. Creating or integrating a worktree does not authorize remote publication.
 - Worktrees isolate checkout files and staging areas, not shared runtime resources. Coordinate writes to the same container, deployment directory, database, port, or other shared service, and serialize conflicting operations even when their code changes use separate worktrees.
-- After verification and integration, remove only the current task's unused worktree and branch when no session still uses them and no changes would be lost. Retain worktrees containing uncommitted or unmerged work until it has been safely delivered or integrated; report the retained path, branch, and remaining work. Never force-remove another task's worktree or perform blanket cleanup.
+- After the task's changes have been committed locally, integrated, and verified, remove only the current task's unused worktree and branch when no session still uses them and no changes would be lost. Retain worktrees containing uncommitted or unmerged work; report the retained path, branch, and remaining work. Never force-remove another task's worktree or perform blanket cleanup.
 
 ## Git Commit Conventions
 
-- Commits follow the authorization for the current task. Do not ask again when the user has already authorized a commit. A request to edit files or maintain conventions does not itself authorize a commit, and authorization to commit does not authorize a push. Never push without explicit authorization.
+- A request to make changes authorizes local commits of that task's completed and verified work by default, including code, documentation, configuration, and shared conventions. Make those local commits without asking again unless the user explicitly requests uncommitted changes or otherwise limits the scope. This standing authorization covers only the current task's changes, not unrelated pending work. Local commit authorization does not authorize a push or other remote publication; those still require explicit user authorization.
 - Before editing and committing, inspect the current branch, `git status --short`, the working-tree diff, and the staged diff. Identify existing user changes. Commit only changes within the current task, do not include unrelated work, and do not clear the user's staging area.
 - Stage by file or hunk. Avoid `git add .` and `git add -A` unless all resulting changes have been reviewed. When a file contains unrelated changes, stage only the current task's changes. Clarify the scope if they cannot be separated reliably.
 - Before committing, inspect `git diff --cached` and run `git diff --cached --check`. Confirm that the staged changes contain no secrets, temporary files, accidental deletions, or unrelated formatting changes. Run checks appropriate to the change and do not bypass commit hooks.

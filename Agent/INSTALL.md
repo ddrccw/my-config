@@ -1,7 +1,7 @@
 <!--
 Authorship: Human-AI collaboration
 AI-Assisted-By: OpenAI Codex
-Updated: 2026-09-06
+Updated: 2026-10-12
 -->
 
 # Agent Installation Instructions
@@ -99,7 +99,7 @@ The NAS installer backs up replaced paths in a private
    ```
 
 4. Avoid duplicate references. If an existing reference points to an obsolete checkout, update it only after confirming that the new shared file is readable.
-5. Do not put machine-specific paths, credentials, session data, or application caches into this repository. Do not commit or push installation changes unless the user separately authorizes those Git operations.
+5. Do not put machine-specific paths, credentials, session data, or application caches into this repository. For changes to repository files, follow the shared Git commit conventions: commit completed and verified task changes locally by default, and publish to a remote only with explicit user authorization.
 
 ## Verification
 
